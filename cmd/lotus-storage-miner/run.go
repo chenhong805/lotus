@@ -154,6 +154,7 @@ var runCmd = &cli.Command{
 			return xerrors.Errorf("getting full node libp2p address: %w", err)
 		}
 
+		// jc: connect to lotus node, does deals come from lotus node? not from cmd testing.
 		if err := minerapi.NetConnect(ctx, remoteAddrs); err != nil {
 			return xerrors.Errorf("connecting to full node (libp2p): %w", err)
 		}
@@ -167,6 +168,7 @@ var runCmd = &cli.Command{
 
 		mux := mux.NewRouter()
 
+		// jc: initialize miner API server.
 		rpcServer := jsonrpc.NewServer()
 		rpcServer.Register("Filecoin", api.PermissionedStorMinerAPI(metrics.MetricedStorMinerAPI(minerapi)))
 
